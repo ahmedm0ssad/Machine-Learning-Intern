@@ -17,8 +17,8 @@ private client data.
 | Week | Card | Deliverable | Status |
 |---|---|---|---|
 | 1 | **ML-01** — Run the starter | `notebooks/01`, `02` executed + "your turn" cells | ✅ **Done** |
-| 1 | ML-02 — Research question | `work/notebooks/w01_research_question.ipynb` | ⏳ Next |
-| 2 | ML-03 — ML task framing | `work/notebooks/w02_ml_task_framing.ipynb` | — |
+| 1 | **ML-02** — Research question | `work/notebooks/w01_research_question.ipynb` | ✅ **Done** |
+| 2 | ML-03 — ML task framing | `work/notebooks/w02_ml_task_framing.ipynb` | ⏳ Next |
 | 3 | ML-04 / ML-05 — Data contract, leakage check | `work/notebooks/w03_*.ipynb` | — |
 | 4 | ML-06 / ML-07 — Signal audit, baseline | `work/notebooks/w04_*.ipynb` | — |
 | 5 | ML-08 — Model | `work/notebooks/w05_model.ipynb` | — |
@@ -48,6 +48,24 @@ Two things I found in the "your turn" cells:
    The gap held out-of-sample (test Precision@20: 0.750 vs 0.500; @50: 0.660 vs 0.620), though a
    depth-2 tree produces tied score blocks, so I state what this run shows rather than claiming
    "the model is always better."
+
+### What ML-02 committed (computed live)
+
+Lane: **Refresh / Content Opportunity Scoring** — rank which pages an editor reviews first,
+scored by **Precision@K**. Three numbers from the starter slice that argue for the lane:
+
+1. **54.2%** of pages are declining (`trend_direction == "down"`) — detection is nearly a coin
+   flip, so the *ordering* is the hard part.
+2. The **top 10% of pages hold 80.5%** of all clicks — miss cost concentrates in a small head,
+   which is why top-of-queue precision is the metric.
+3. **9,961** visible pages (`impressions_90d >= 500`) are already declining — a ~199-week queue
+   at 50 reviews/week, far past any editor's capacity.
+
+Honesty notes carried forward: the starter's `is_declining_label` comes from
+`trend_direction`/`trend_pct`, computed on the same window as the features — the capstone moves
+the label to a *future* window once the warehouse unlocks (weeks 3+). Those columns are
+label-side and never features. Claims stay observed / directional / decision-support; nothing
+causal, nothing about "predicting Google."
 
 ---
 
